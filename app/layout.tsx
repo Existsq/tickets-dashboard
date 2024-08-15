@@ -11,7 +11,6 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: "Best Ticket Bot",
-  description: "",
 };
 
 export default function RootLayout({

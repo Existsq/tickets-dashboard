@@ -1,4 +1,4 @@
-import { FaDiscord } from "react-icons/fa";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,17 +12,9 @@ import { ModeToggle } from "@/components/ui/mode-toggle";
 import SignIn from "@/components/sign-in";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import Link from "next/link";
 
 export default async function LoginForm() {
-  const session = await auth()
-
-  // if (!session.user) {
-  //   return null
-  // } else {
-  //   redirect("/dashboard/settings")
-  // }
-
-
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="flex-row space-y-4 justify-center items-center">
@@ -39,7 +31,7 @@ export default async function LoginForm() {
               variant="outline"
               className="w-full flex justify-center items-center gap-2"
             >
-              Home page
+              <Link href={"/"}>Home page</Link>
               <GoArrowRight size={20} />
             </Button>
           </CardContent>

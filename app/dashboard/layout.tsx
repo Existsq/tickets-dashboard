@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { SignOut } from "@/components/sign-out";
 
 export default function DashboardLayout({
   children,
@@ -152,7 +153,9 @@ export default function DashboardLayout({
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem>
+                <SignOut />
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
