@@ -12,12 +12,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// Определение типов для пропсов компонента
+
 interface ModeToggleProps {
   align?: "start" | "center" | "end"; // Определяем возможные значения align
 }
 
-export function ModeToggle({ align = "center" }: ModeToggleProps) { // Присваиваем значение по умолчанию
+export function ModeToggle({ align = "center" }: ModeToggleProps) {
   const { setTheme } = useTheme();
 
   return (
@@ -30,13 +30,13 @@ export function ModeToggle({ align = "center" }: ModeToggleProps) { // Прис�
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align={align}>
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={() => setTheme("light")} className=" cursor-pointer">
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onClick={() => setTheme("dark")}  className=" cursor-pointer">
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={() => setTheme("system")}  className=" cursor-pointer">
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

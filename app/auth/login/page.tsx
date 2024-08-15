@@ -10,8 +10,6 @@ import {
 import { GoArrowRight } from "react-icons/go";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import SignIn from "@/components/sign-in";
-import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 import Link from "next/link";
 
 export default async function LoginForm() {
@@ -38,7 +36,7 @@ export default async function LoginForm() {
         </Card>
 
         <div className="flex justify-center items-center">
-          <ModeToggle align={"center"} />
+          <ModeToggle align={"center"}/>
         </div>
       </div>
     </div>
