@@ -10,8 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+
 
 export default async function Settings() {
   return (

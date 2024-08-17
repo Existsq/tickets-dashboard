@@ -1,12 +1,12 @@
 "use client"
 import { signIn } from "next-auth/react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { FaDiscord } from "react-icons/fa";
 
 export default function SignIn() {
   const handleSignIn = async () => {
     // Вызов signIn на клиентской стороне
-    await signIn("discord", { callbackUrl: "/dashboard/analytics" });
+    await signIn("discord", { callbackUrl: "/dashboard" });
   };
 
   return (

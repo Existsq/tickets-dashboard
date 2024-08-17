@@ -32,7 +32,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       // Если access token не истек, возвращаем токен
       if (Date.now() < token.accessTokenExpires) {
-        // console.log(token);
         return token;
       }
 
@@ -55,7 +54,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.name = token.nickname as string;
 
       session.accessToken = token.accessToken;
-      console.log(session);
 
       return session;
     },

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { GoArrowRight } from "react-icons/go";
 import { ModeToggle } from "@/components/ui/mode-toggle";
-import SignIn from "@/components/sign-in";
+import SignIn from "@/components/auth/sign-in";
 import Link from "next/link";
 
 export default async function LoginForm() {
