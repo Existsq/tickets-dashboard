@@ -1,6 +1,17 @@
-import NextAuth from "next-auth";
+import NextAuth, { Account, Profile } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import axios from "axios";
+import { JWT } from "@auth/core/jwt";
+
+// interface CustomJWT extends Jwt {
+//   accessToken: string;
+//   refreshToken: string;
+//   accessTokenExpires: number;
+//   email?: string;
+//   nickname?: string[];
+//   guilds?: any[]; // Adjust based on the structure of Discord guilds
+//   error?: string;
+// }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -12,8 +23,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // Срок действия JWT (30 дней)
+    updateAge: 24 * 60 * 60, // 24 hours
   },
-  debug: true,
+  jwt: {
+    maxAge: 60 * 60 * 24 * 30,
+  },
   secret: process.env.AUTH_SECRET,
   callbacks: {
     async jwt({ token, account, profile }) {
@@ -21,14 +35,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account && profile) {
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
-        token.accessTokenExpires = Date.now() + account.expires_in * 1000; // Время истечения access token
+        token.accessTokenExpires =
+          Date.now() + (account.expires_in ?? 0) * 1000; // Время истечения access token
 
-        token.email = profile.email;
-        token.nickname = profile.username; // Discord profile username
-        token.guilds = profile.guilds;
+        token.email = profile.email || "empty";
+        token.nickname = profile.username || "empty"; // Discord profile username
+        token.guilds = profile.guilds || "empty";
       }
-
-      console.log(token);
 
       // Если access token не истек, возвращаем токен
       if (Date.now() < token.accessTokenExpires) {
@@ -53,13 +66,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.email = token.email as string;
       session.user.name = token.nickname as string;
 
-      session.accessToken = token.accessToken;
+      // session.accessToken = token.accessToken;
 
       return session;
     },
   },
   pages: {
     signIn: "/auth/login",
+    error: "/auth/error",
   },
   cookies: {
     sessionToken: {
@@ -83,7 +97,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 });
 
 // Функция для обновления access token
-async function refreshAccessToken(token) {
+async function refreshAccessToken(token: JWT) {
   try {
     const response = await axios.post(
       "https://discord.com/api/oauth2/token",
@@ -107,7 +121,7 @@ async function refreshAccessToken(token) {
       ...token,
       accessToken: refreshedTokens.access_token,
       accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
-      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Обновляем только если есть новый refresh token
+      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
     console.error("Ошибка обновления токена", error);

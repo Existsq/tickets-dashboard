@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import { Menu, Package2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,13 +14,16 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { auth } from "@/auth";
 import { SignOut } from "@/components/auth/sign-out";
+import DiscordLogo from "./logo";
+import LogoSkeleton from "./logo-skeleton";
+import { Navigation } from "./nav";
 
 const userNavLinks = [
   { name: "Analytics", href: "/dashboard/analytics" },
-  { name: "Servers", href: "/dashboard/analytics" },
+  { name: "Servers", href: "/dashboard/servers" },
   { name: "Tickets", href: "/dashboard/tickets" },
   { name: "Integrations", href: "/dashboard/integrations" },
-  { name: "Settings", href: "/dashboard/settings" },
+  { name: "Settings", href: "/dashboard/settings/profile" },
 ];
 
 const adminNavLinks = [
@@ -30,7 +31,11 @@ const adminNavLinks = [
   { name: "Statistics", href: "/dashboard/admin/statistics" },
   { name: "Users", href: "/dashboard/admin/users" },
   { name: "Metrics", href: "/dashboard/admin/metrics" },
-  { name: "Settings", href: "/dashboard/admin/settings" },
+  { name: "Settings", href: "/dashboard/settings/profile" },
+  { name: "Analytics", href: "/dashboard/analytics" },
+  { name: "Servers", href: "/dashboard/servers" },
+  { name: "Tickets", href: "/dashboard/tickets" },
+  { name: "Integrations", href: "/dashboard/integrations" },
 ];
 
 function Logo() {
@@ -55,6 +60,14 @@ function isAdmin(email: string) {
   }
 }
 
+function isSeparating(navLink: string) {
+  if (navLink == "Analytics") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export default async function DashboardHeader() {
   // Получаем сессию на сервере
   const session = await auth();
@@ -62,61 +75,37 @@ export default async function DashboardHeader() {
   // Определяем данные пользователя
   const userName = session?.user?.name || "User";
   const userEmail = session?.user?.email || "user@example.com";
-  const userAvatar = session?.user?.image || "/default-avatar.png";
+  const isAdm = isAdmin(userEmail);
 
   return (
     <>
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-[100]">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <Logo />
-          {isAdmin(userEmail) &&
-            adminNavLinks.map((obj) => (
-              <Link href={obj.href} key={obj.href}>
-                {obj.name}
-              </Link>
-            ))}
-
-          {!isAdmin(userEmail) &&
-            userNavLinks.map((obj) => (
-              <Link href={obj.href} key={obj.href}>
-                {obj.name}
-              </Link>
-            ))}
+          <Navigation
+            isAdmin={isAdm}
+            navlinks={isAdm ? adminNavLinks : userNavLinks}
+            orientation="vertical"
+          />
         </nav>
         <Sheet>
           <SheetTrigger asChild>
             <Button
               variant="outline"
               size="icon"
-              className="shrink-0 md:hidden"
+              className="shrink-0 md:hidden cursor-pointer"
             >
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left">
+          <SheetContent side="left" className="mt-16">
             <nav className="grid gap-6 text-lg font-medium">
-              <Logo />
-
-              {isAdmin(userEmail) &&
-                adminNavLinks.map((obj) => (
-                  <Link href={obj.href} key={obj.href}>
-                    {obj.name}
-                  </Link>
-                ))}
-
-              {!isAdmin(userEmail) &&
-                userNavLinks.map((obj) => (
-                  <Link href={obj.href} key={obj.href}>
-                    {obj.name}
-                  </Link>
-                ))}
-
-              {/* {userNavLinks.map((obj) => (
-                <Link href={obj.href} key={obj.href}>
-                  {obj.name}
-                </Link>
-              ))} */}
+              <Navigation
+                isAdmin={isAdm}
+                navlinks={isAdm ? adminNavLinks : userNavLinks}
+                orientation="horizontal"
+              />
             </nav>
           </SheetContent>
         </Sheet>
@@ -139,17 +128,9 @@ export default async function DashboardHeader() {
                 size="icon"
                 className="relative rounded-full flex"
               >
-                {!userAvatar ? (
-                  <CircleUser className="min-h-full min-w-full" />
-                ) : (
-                  <Image
-                    src={userAvatar}
-                    alt="avatar"
-                    width={256}
-                    height={256}
-                    className="justify-center items-center rounded-full"
-                  />
-                )}
+                <Suspense fallback={<LogoSkeleton />}>
+                  <DiscordLogo />
+                </Suspense>
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
@@ -160,10 +141,10 @@ export default async function DashboardHeader() {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link href="/dashboard/settings">Settings</Link>
+                <Link href="/dashboard/settings/profile">Settings</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/dashboard/support">Support</Link>
+                <Link href="/support">Support</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
@@ -172,7 +153,7 @@ export default async function DashboardHeader() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <ModeToggle align={"end"} />
+          {/* <ModeToggle align={"end"} /> */}
         </div>
       </header>
     </>

@@ -16,12 +16,12 @@ export default function LinkCard({ title, description, href, icon }: Card) {
         <div className="flex gap-6 pb-5">
           <div
             id="icon"
-            className="border-[1px] border-zinc-200 p-2 rounded-lg max-h-[42px] text-black"
+            className="border-[1px] border-zinc-200 p-2 rounded-lg max-h-[42px] dark:text-zinc-300 bg-white dark:bg-zinc-900/50 dark:border-zinc-700"
           >
             {icon}
           </div>
           <div className="flex-row justify-start text-left space-y-3 pt-1">
-            <p className="text-[15px] font-semibold leading-none tracking-tight text-zinc-950">
+            <p className="text-[15px] font-bold leading-none tracking-tight text-zinc-900 dark:text-zinc-200">
               {title}
             </p>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
@@ -29,7 +29,7 @@ export default function LinkCard({ title, description, href, icon }: Card) {
             </p>
           </div>
         </div>
-        <ChevronRight color="#9CA3AF" size={20} className="-mt-10" />
+        <ChevronRight color="#9CA3AF" size={20} className="-mt-10 ml-6" />
       </a>
       <Divider />
     </div>

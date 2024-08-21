@@ -1,5 +1,4 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Card,
   CardContent,
@@ -11,75 +10,55 @@ import {
 import { Progress } from "../ui/progress";
 
 export type Metrics = {
-  weekSummary: number;
+  weekSummary: string;
   weekPersent: number;
 };
 
-async function getData(): Promise<Metrics> {
+async function fetchData(): Promise<Metrics> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        weekSummary: 747,
+        weekSummary: "747",
         weekPersent: 25,
       });
-    }, 1000);
+    }, 200);
   });
 }
 
-function WeekStatCard({ weekSummary, weekPersent }: Metrics) {
+function formatCurrency(value: string | number): string {
+  const amount = typeof value === "string" ? parseFloat(value) : value;
+
+  const formatted = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+
+  return formatted;
+}
+
+export default async function WeekCard() {
+  const data = await fetchData();
+
   return (
     <div>
       <Card x-chunk="dashboard-05-chunk-1">
         <CardHeader className="pb-2">
           <CardDescription>This Week</CardDescription>
-          <CardTitle className="text-4xl">${weekSummary}</CardTitle>
+          <CardTitle className="text-4xl">
+            {formatCurrency(data.weekSummary)}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-xs text-muted-foreground">
-            +{weekPersent}% from last week
+            +{data.weekPersent}% from last week
           </div>
         </CardContent>
         <CardFooter>
-          <Progress value={weekPersent} />
+          <Progress value={data.weekPersent} />
         </CardFooter>
       </Card>
-    </div>
-  );
-}
-
-export default function WeekCard() {
-  const [data, setData] = useState<Metrics>();
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    getData().then((data) => {
-      setData(data);
-      setLoading(false);
-    });
-  }, []);
-
-  return (
-    <div className="rounded">
-      {loading ? (
-        <Card x-chunk="dashboard-05-chunk-1">
-          <CardHeader className="pb-2">
-            <CardDescription>This Week</CardDescription>
-            <CardTitle>
-              <div className="min-h-[40px] min-w-full bg-zinc-100 dark:bg-zinc-900 rounded-lg col-span-6"></div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-xs text-muted-foreground flex">
-              <div className="min-h-[16px] min-w-full bg-zinc-100 dark:bg-zinc-900 rounded-lg col-span-6"></div>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <div className="min-h-[16px] min-w-full bg-zinc-100 dark:bg-zinc-900 rounded-lg col-span-6"></div>
-          </CardFooter>
-        </Card>
-      ) : (
-        data && <WeekStatCard {...data} />
-      )}
     </div>
   );
 }

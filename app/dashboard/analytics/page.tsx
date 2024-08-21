@@ -1,44 +1,51 @@
 "use client";
 
-import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Label,
-  LabelList,
-  Line,
-  LineChart,
-  PolarAngleAxis,
-  RadialBar,
-  RadialBarChart,
-  Rectangle,
-  ReferenceLine,
-  XAxis,
-  YAxis,
-} from "recharts";
+// import {
+//   Area,
+//   AreaChart,
+//   Bar,
+//   BarChart,
+//   CartesianGrid,
+//   Label,
+//   LabelList,
+//   Line,
+//   LineChart,
+//   PolarAngleAxis,
+//   RadialBar,
+//   RadialBarChart,
+//   Rectangle,
+//   ReferenceLine,
+//   XAxis,
+//   YAxis,
+// } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { Separator } from "@/components/ui/separator";
+// import {
+//   Card,
+//   CardContent,
+//   CardDescription,
+//   CardFooter,
+//   CardHeader,
+//   CardTitle,
+// } from "@/components/ui/card";
+// import {
+//   ChartContainer,
+//   ChartTooltip,
+//   ChartTooltipContent,
+// } from "@/components/ui/chart";
+// import { Separator } from "@/components/ui/separator";
+import { Suspense } from "react";
+// import SimpleChart from "@/components/dashboard/charts/simple-chart";
+// import SimpleChartSkeleton from "@/components/dashboard/charts/simple-chart-skeleton";
+import { OpenedClosedChart } from "@/components/dashboard/charts/opened-closed-chart";
+import { OpenedClosedSkeleton } from "@/components/dashboard/charts/opened-closed-skeleton";
 
 export default function Analytics() {
-
   return (
-    <div className="chart-wrapper mx-auto flex max-w-6xl flex-col flex-wrap items-start justify-center gap-6 p-6 sm:flex-row sm:p-8">
-      <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[25rem]">
+    <div
+      // className="chart-wrapper flex max-w-6xl flex-col flex-wrap items-start justify-center gap-6 p-6 sm:flex-row sm:p-8"
+      className="grid grid-cols-3 gap-4 w-full p-6 max-h-screen"
+    >
+      {/* <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[22rem] lg:grid-cols-1 xl:max-w-[25rem]">
         <Card className="lg:max-w-md" x-chunk="charts-01-chunk-0">
           <CardHeader className="space-y-0 pb-2">
             <CardDescription>Today</CardDescription>
@@ -284,8 +291,8 @@ export default function Analytics() {
             </ChartContainer>
           </CardContent>
         </Card>
-      </div>
-      <div className="grid w-full flex-1 gap-6 lg:max-w-[20rem]">
+      </div> */}
+      {/* <div className="grid w-full flex-1 gap-6 lg:max-w-[20rem]">
         <Card className="max-w-xs" x-chunk="charts-01-chunk-2">
           <CardHeader>
             <CardTitle>Progress</CardTitle>
@@ -585,9 +592,9 @@ export default function Analytics() {
             </div>
           </CardFooter>
         </Card>
-      </div>
-      <div className="grid w-full flex-1 gap-6">
-        <Card className="max-w-xs" x-chunk="charts-01-chunk-5">
+      </div> */}
+      {/* <div className="grid w-full flex-1 gap-6"> */}
+      {/* <Card className="max-w-xs" x-chunk="charts-01-chunk-5">
           <CardContent className="flex gap-4 p-4">
             <div className="grid items-center gap-2">
               <div className="grid flex-1 auto-rows-min gap-0.5">
@@ -674,8 +681,8 @@ export default function Analytics() {
               </RadialBarChart>
             </ChartContainer>
           </CardContent>
-        </Card>
-        <Card className="max-w-xs" x-chunk="charts-01-chunk-6">
+        </Card> */}
+      {/* <Card className="max-w-xs" x-chunk="charts-01-chunk-6">
           <CardHeader className="p-4 pb-0">
             <CardTitle>Active Energy</CardTitle>
             <CardDescription>
@@ -755,8 +762,27 @@ export default function Analytics() {
               </BarChart>
             </ChartContainer>
           </CardContent>
-        </Card>
-        <Card className="max-w-xs" x-chunk="charts-01-chunk-7">
+        </Card> */}
+      {/* <Suspense fallback={<SimpleChartSkeleton />}>
+        <SimpleChart />
+      </Suspense> */}
+      <div className="col-span-1">
+        <Suspense fallback={<OpenedClosedSkeleton />}>
+          <OpenedClosedChart />
+        </Suspense>
+      </div>
+      <div className="col-span-1">
+        <Suspense fallback={<OpenedClosedSkeleton />}>
+          <OpenedClosedChart />
+        </Suspense>
+      </div>
+      <div className="col-span-1">
+        <Suspense fallback={<OpenedClosedSkeleton />}>
+          <OpenedClosedChart />
+        </Suspense>
+      </div>
+
+      {/* <Card className="max-w-xs" x-chunk="charts-01-chunk-7">
           <CardHeader className="space-y-0 pb-0">
             <CardDescription>Time in Bed</CardDescription>
             <CardTitle className="flex items-baseline gap-1 text-4xl tabular-nums">
@@ -859,8 +885,8 @@ export default function Analytics() {
               </AreaChart>
             </ChartContainer>
           </CardContent>
-        </Card>
-      </div>
+        </Card> */}
+      {/* </div> */}
     </div>
   );
 }
