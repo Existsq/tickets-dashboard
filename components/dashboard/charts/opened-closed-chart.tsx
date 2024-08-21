@@ -49,11 +49,11 @@ async function getData(): Promise<OpenedClosedChart[]> {
 const chartConfig = {
   desktop: {
     label: "Closed",
-    color: "hsl(var(--chart-8))",
+    color: "hsl(var(--chart-1))",
   },
   mobile: {
     label: "Opened",
-    color: "hsl(var(--chart-6))",
+    color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 

@@ -38,7 +38,7 @@ const Navigation = ({ navlinks, isAdmin, orientation }: Props) => {
                 className={
                   isActive
                     ? "dark:text-zinc-50 text-zinc-950"
-                    : "dark:text-zinc-400 text-zinc-400"
+                    : "dark:text-zinc-400 text-zinc-500"
                 }
               >
                 {link.name}

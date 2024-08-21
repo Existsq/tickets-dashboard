@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -17,41 +16,49 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
+import ServerSummary from "./server-summary";
 
 export default function ServerCard() {
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between">
-        <div className="flex gap-2">
+        <div className="flex gap-4 items-center">
           <Avatar>
             <AvatarImage alt="server avatar" />
             <AvatarFallback></AvatarFallback>
           </Avatar>
-          <div className="flex-col items-center justify-start">
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </div>
+          {/* <div className="flex-col items-center justify-start space-y-1"> */}
+          <CardTitle>Test</CardTitle>
+          {/* <CardDescription>Members: 2341</CardDescription> */}
+          {/* </div> */}
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button size="icon" variant="ghost" className="h-8 w-8">
               <MoreHorizontal className="h-5 w-5" />
-              <span className="sr-only">More</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>Export</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Trash</DropdownMenuItem>
+            <DropdownMenuItem>Set to current</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </CardHeader>
-      <CardContent>
-        <p>Card Content</p>
+      <CardContent className="grid grid-cols-2 grid-rows-2 gap-4 pb-10">
+        <ServerSummary value="2,342" label="Members" />
+        <ServerSummary value="Exist" label="Owner" />
+        <ServerSummary value="23" label="Roles" />
+        <ServerSummary value="Active" label="Premium" />
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
+      <CardFooter className="flex items-center justify-between gap-4">
+        <Button variant="default" className="w-full">
+          Manage settings
+        </Button>
+        <Button variant="outline" className="w-full">
+          Select as current
+        </Button>
       </CardFooter>
     </Card>
   );

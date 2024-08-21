@@ -376,7 +376,7 @@ export default function TableLoad() {
   return (
     <div className="rounded-md">
       {loading ? (
-        <div className="min-h-20 animate-pulse flex space-x-4 min-w-full bg-zinc-100 dark:bg-zinc-900 rounded-md"></div>
+        <div className="min-h-20 animate-pulse flex space-x-4 min-w-full bg-muted dark:bg-muted rounded-md"></div>
       ) : error ? (
         <div className="min-h-20 flex flex-col items-center justify-center">
           <div className="flex flex-col items-center space-y-3">

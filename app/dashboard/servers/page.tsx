@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Link2Off, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Suspense } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { IoGridOutline } from "react-icons/io5";
@@ -66,7 +66,7 @@ export default function Servers() {
           </form>
         </div>
         <div className=" col-span-1 flex gap-4 ">
-          <Select>
+          <Select defaultValue="name">
             <SelectTrigger className="w-[250px]">
               <SelectValue placeholder="Sort by name" />
             </SelectTrigger>
@@ -76,13 +76,13 @@ export default function Servers() {
             </SelectContent>
           </Select>
 
-          <Tabs defaultValue="grid" className="">
+          <Tabs defaultValue="grid">
             <TabsList>
-              <TabsTrigger value="grid">
-                <IoGridOutline size={15} />
+              <TabsTrigger value="grid" className="p-1.5">
+                <IoGridOutline size={20} color="#fff" />
               </TabsTrigger>
-              <TabsTrigger value="list">
-                <IoIosList size={15} />
+              <TabsTrigger value="list" className="p-1.5">
+                <IoIosList size={20} color="#fff" />
               </TabsTrigger>
             </TabsList>
           </Tabs>

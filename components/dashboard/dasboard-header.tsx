@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
-import { Menu, Package2, Search } from "lucide-react";
+import { Menu, MoreHorizontal, Package2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,6 +17,7 @@ import { SignOut } from "@/components/auth/sign-out";
 import DiscordLogo from "./logo";
 import LogoSkeleton from "./logo-skeleton";
 import { Navigation } from "./nav";
+import { CurrentServerBox } from "./current-server-box";
 
 const userNavLinks = [
   { name: "Analytics", href: "/dashboard/analytics" },
@@ -88,6 +89,7 @@ export default async function DashboardHeader() {
             orientation="vertical"
           />
         </nav>
+
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -109,8 +111,11 @@ export default async function DashboardHeader() {
             </nav>
           </SheetContent>
         </Sheet>
-        <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-          <form className="ml-auto flex-1 sm:flex-initial">
+
+        <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
+          <CurrentServerBox />
+
+          <form className="flex-1 sm:flex-initial">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input

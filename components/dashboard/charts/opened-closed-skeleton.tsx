@@ -12,19 +12,19 @@ export function OpenedClosedSkeleton() {
     <Card>
       <CardHeader>
         <CardTitle>
-          <div className="animate-pulse h-[20px] w-2/3 bg-zinc-100 dark:bg-zinc-900 rounded-xl"></div>
+          <div className="animate-pulse h-[20px] w-2/3 bg-muted dark:bg-muted rounded-xl"></div>
         </CardTitle>
         <CardDescription>
-          <div className="animate-pulse h-[14px] w-full bg-zinc-100 dark:bg-zinc-900 rounded-lg mt-2"></div>
+          <div className="animate-pulse h-[14px] w-full bg-muted dark:bg-muted rounded-lg mt-2"></div>
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="animate-pulse h-[240px] w-full bg-zinc-100 dark:bg-zinc-900 rounded-lg "></div>
+        <div className="animate-pulse h-[240px] w-full bg-muted dark:bg-muted rounded-lg "></div>
       </CardContent>
       <CardFooter>
         <div className="flex-row w-full items-start space-y-2 text-sm">
-          <div className="animate-pulse h-[14px] w-full bg-zinc-100 dark:bg-zinc-900 rounded-lg"></div>
-          <div className="animate-pulse h-[14px] w-2/3 bg-zinc-100 dark:bg-zinc-900 rounded-lg"></div>
+          <div className="animate-pulse h-[14px] w-full bg-muted dark:bg-muted rounded-lg"></div>
+          <div className="animate-pulse h-[14px] w-2/3 bg-muted dark:bg-muted rounded-lg"></div>
         </div>
       </CardFooter>
     </Card>

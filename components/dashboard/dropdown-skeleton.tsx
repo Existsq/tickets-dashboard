@@ -30,8 +30,8 @@ export default async function DropdownSkeleton() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>
-            <div className="animate-pulse min-h-[14px] min-w-full bg-zinc-100 dark:bg-zinc-900 rounded-lg col-span-6"></div>
-            <div className="animate-pulse min-h-[14px] min-w-full bg-zinc-100 dark:bg-zinc-900 rounded-lg col-span-6"></div>
+            <div className="animate-pulse min-h-[14px] min-w-full bg-muted dark:bg-muted rounded-lg col-span-6"></div>
+            <div className="animate-pulse min-h-[14px] min-w-full bg-muted dark:bg-muted rounded-lg col-span-6"></div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
