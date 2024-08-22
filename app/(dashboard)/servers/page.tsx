@@ -20,38 +20,6 @@ import Link from "next/link";
 export default function Servers() {
   return (
     <>
-      {/* <div className="flex flex-row gap-4 justify-around px-6 py-4 lg:px-16 lg:py-6">
-        <form className="w-full flex-1 sm:flex-initial">
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search tickets..."
-              className="pl-8 w-full"
-            />
-          </div>
-        </form>
-        <Select>
-          <SelectTrigger className="w-[250px]">
-            <SelectValue placeholder="Sort by name"/>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="name">Sort by name</SelectItem>
-            <SelectItem value="new">Sort by newest</SelectItem>
-          </SelectContent>
-        </Select>
-        <Tabs defaultValue="grid" className="w-[400px]">
-          <TabsList>
-            <TabsTrigger value="grid">
-              <IoGridOutline size={15} />
-            </TabsTrigger>
-            <TabsTrigger value="list">
-              <IoIosList size={15} />
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div> */}
-
       <div className="grid grid-cols-3 gap-4 w-full px-6 lg:px-16 py-4 max-h-screen">
         <div className="col-span-2">
           <form className="w-full flex-1 sm:flex-initial">
@@ -78,11 +46,11 @@ export default function Servers() {
 
           <Tabs defaultValue="grid">
             <TabsList>
-              <TabsTrigger value="grid" className="p-1.5">
-                <IoGridOutline size={20} color="#fff" />
+              <TabsTrigger value="grid" className="py-2 px-2.5">
+                <IoGridOutline size={15} color="#fff" />
               </TabsTrigger>
-              <TabsTrigger value="list" className="p-1.5">
-                <IoIosList size={20} color="#fff" />
+              <TabsTrigger value="list" className="py-2 px-2.5">
+                <IoIosList size={15} color="#fff" />
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -92,7 +60,7 @@ export default function Servers() {
               buttonVariants({ variant: "default" }) +
               "flex gap-2 items-center font-semibold"
             }
-            href="/discord/invite"
+            href="https://discord.com/oauth2/authorize?client_id=1264239380000936067"
           >
             Add new
             <FiPlusCircle size={17} />
@@ -101,10 +69,10 @@ export default function Servers() {
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 w-full px-6 lg:px-16 max-h-screen">
         <Suspense fallback={<ServerCardSkeleton />}>
-          <ServerCard />
+          <ServerCard members="2,345" premium={true} roles="23" owner="Exist" />
         </Suspense>
         <Suspense fallback={<ServerCardSkeleton />}>
-          <ServerCard />
+          <ServerCard members="23" premium={false} roles="12" owner="Exist" />
         </Suspense>
       </div>
     </>

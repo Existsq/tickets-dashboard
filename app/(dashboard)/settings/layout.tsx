@@ -5,30 +5,30 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarNav } from "./components/sidebar-nav";
 
 export const metadata: Metadata = {
-  title: "Dashboard Settings",
+  title: "Dashboard | Settings",
   description: "Advanced form example using react-hook-form and Zod.",
 };
 
 const sidebarNavItems = [
   {
     title: "Profile",
-    href: "/dashboard/settings/profile",
+    href: "/settings/profile",
   },
   {
     title: "Account",
-    href: "/dashboard/settings/account",
+    href: "/settings/account",
   },
   {
     title: "Appearance",
-    href: "/dashboard/settings/appearance",
+    href: "/settings/appearance",
   },
   {
     title: "Notifications",
-    href: "/dashboard/settings/notifications",
+    href: "/settings/notifications",
   },
   {
     title: "Display",
-    href: "/dashboard/settings/display",
+    href: "/settings/display",
   },
 ];
 

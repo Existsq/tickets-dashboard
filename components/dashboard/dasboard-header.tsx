@@ -18,25 +18,26 @@ import DiscordLogo from "./logo";
 import LogoSkeleton from "./logo-skeleton";
 import { Navigation } from "./nav";
 import { CurrentServerBox } from "./current-server-box";
+import { cookies } from "next/headers";
 
 const userNavLinks = [
-  { name: "Analytics", href: "/dashboard/analytics" },
-  { name: "Servers", href: "/dashboard/servers" },
-  { name: "Tickets", href: "/dashboard/tickets" },
-  { name: "Integrations", href: "/dashboard/integrations" },
-  { name: "Settings", href: "/dashboard/settings/profile" },
+  { name: "Analytics", href: "/analytics" },
+  { name: "Servers", href: "/servers" },
+  { name: "Tickets", href: "/tickets" },
+  { name: "Integrations", href: "/integrations" },
+  { name: "Settings", href: "/settings/profile" },
 ];
 
 const adminNavLinks = [
-  { name: "Sales", href: "/dashboard/admin/sales" },
-  { name: "Statistics", href: "/dashboard/admin/statistics" },
-  { name: "Users", href: "/dashboard/admin/users" },
-  { name: "Metrics", href: "/dashboard/admin/metrics" },
-  { name: "Settings", href: "/dashboard/settings/profile" },
-  { name: "Analytics", href: "/dashboard/analytics" },
-  { name: "Servers", href: "/dashboard/servers" },
-  { name: "Tickets", href: "/dashboard/tickets" },
-  { name: "Integrations", href: "/dashboard/integrations" },
+  { name: "Sales", href: "/sales" },
+  { name: "Statistics", href: "/statistics" },
+  { name: "Users", href: "/users" },
+  { name: "Metrics", href: "/metrics" },
+  { name: "Settings", href: "/settings/profile" },
+  { name: "Analytics", href: "/analytics" },
+  { name: "Servers", href: "/servers" },
+  { name: "Tickets", href: "/tickets" },
+  { name: "Integrations", href: "/integrations" },
 ];
 
 function Logo() {
@@ -72,6 +73,7 @@ function isSeparating(navLink: string) {
 export default async function DashboardHeader() {
   // Получаем сессию на сервере
   const session = await auth();
+  const currentServer = cookies().get("current-server")?.value;
 
   // Определяем данные пользователя
   const userName = session?.user?.name || "User";
@@ -113,7 +115,7 @@ export default async function DashboardHeader() {
         </Sheet>
 
         <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
-          <CurrentServerBox />
+          <CurrentServerBox server={currentServer} />
 
           <form className="flex-1 sm:flex-initial">
             <div className="relative">
@@ -146,7 +148,7 @@ export default async function DashboardHeader() {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link href="/dashboard/settings/profile">Settings</Link>
+                <Link href="/settings/profile">Settings</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link href="/support">Support</Link>

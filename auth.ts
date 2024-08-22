@@ -3,16 +3,6 @@ import DiscordProvider from "next-auth/providers/discord";
 import axios from "axios";
 import { JWT } from "@auth/core/jwt";
 
-// interface CustomJWT extends Jwt {
-//   accessToken: string;
-//   refreshToken: string;
-//   accessTokenExpires: number;
-//   email?: string;
-//   nickname?: string[];
-//   guilds?: any[]; // Adjust based on the structure of Discord guilds
-//   error?: string;
-// }
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     DiscordProvider({
@@ -58,7 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return {
           ...session,
           error: "Authentication error, please login again.",
-          redirect: "/auth/login",
+          redirect: "/sign-in",
         };
       }
 
@@ -72,8 +62,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   pages: {
-    signIn: "/auth/login",
-    error: "/auth/error",
+    signIn: "/sign-in",
+    error: "/error",
   },
   cookies: {
     sessionToken: {

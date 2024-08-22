@@ -8,23 +8,23 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.AUTH_SECRET });
 
   const url = req.nextUrl.clone();
-  const protectedPaths = ["/dashboard", "/dashboard/profile"];
-  const publicPaths = ["/auth/login"];
+  const protectedPaths = ["/dashboard", "/admin"];
+  const publicPaths = ["/sign-in"];
 
   // Если запрос идет на защищенный путь
   if (protectedPaths.some((path) => url.pathname.startsWith(path))) {
     // Если токен отсутствует, перенаправляем на страницу логина
     if (!token) {
-      url.pathname = "/auth/login";
+      url.pathname = "/sign-in";
       return NextResponse.redirect(url);
     }
 
     // Если пользователь авторизован и пытается перейти на логин или главную панель
-    if (url.pathname === "/auth/login" || url.pathname === "/dashboard") {
+    if (url.pathname === "/sign-in" || url.pathname === "/dashboard") {
       if (adminEmails.includes(token.email)) {
-        url.pathname = "/dashboard/admin/sales";
+        url.pathname = "/sales";
       } else {
-        url.pathname = "/dashboard/analytics";
+        url.pathname = "/analytics";
       }
       return NextResponse.redirect(url);
     }
@@ -34,9 +34,9 @@ export async function middleware(req: NextRequest) {
   if (publicPaths.some((path) => url.pathname.startsWith(path))) {
     if (token) {
       if (adminEmails.includes(token.email)) {
-        url.pathname = "/dashboard/admin/sales";
+        url.pathname = "/sales";
       } else {
-        url.pathname = "/dashboard/analytics";
+        url.pathname = "/analytics";
       }
       return NextResponse.redirect(url);
     }
@@ -48,9 +48,5 @@ export async function middleware(req: NextRequest) {
 
 // Конфигурация для применения middleware только к определенным путям
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/profile/:path*",
-    "/auth/login",
-  ],
+  matcher: ["/profile/:path*", "/sign-in"],
 };

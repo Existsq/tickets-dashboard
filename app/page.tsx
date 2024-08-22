@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Link href={"/auth/login"} className={buttonVariants({ variant: "outline" })}>Log in</Link>
+      <Link href={"/sign-in"} className={buttonVariants({ variant: "outline" })}>Sign in</Link>
     </main>
   );
 }

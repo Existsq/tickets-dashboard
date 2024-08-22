@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import { auth } from "@/auth";
 
 export const metadata: Metadata = {
-  title: "Dashboard | Tickets",
+  title: "Dashboard | Admin",
   description: "",
 };
 

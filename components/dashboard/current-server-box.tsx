@@ -33,9 +33,16 @@ const frameworks = [
   },
 ];
 
-export function CurrentServerBox() {
+export type CurrentServerProps = {
+  server: string;
+};
+
+export function CurrentServerBox(props: CurrentServerProps) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  // Initialize the value state with the server prop
+  const [value, setValue] = React.useState(
+    props.server.substring(1, props.server.length - 1) || ""
+  );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -63,7 +70,17 @@ export function CurrentServerBox() {
                   key={framework.value}
                   value={framework.value}
                   onSelect={(currentValue) => {
+                    {
+                      currentValue === value
+                        ? (document.cookie = `current-server=${JSON.stringify(
+                            ""
+                          )}`)
+                        : (document.cookie = `current-server=${JSON.stringify(
+                            currentValue
+                          )}`);
+                    }
                     setValue(currentValue === value ? "" : currentValue);
+                    console.log(value);
                     setOpen(false);
                   }}
                 >

@@ -18,7 +18,14 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import ServerSummary from "./server-summary";
 
-export default function ServerCard() {
+export type ServerCardProps = {
+  members: string;
+  owner: string;
+  roles: string;
+  premium: boolean;
+};
+
+export default function ServerCard(props: ServerCardProps) {
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between">
@@ -47,10 +54,13 @@ export default function ServerCard() {
         </DropdownMenu>
       </CardHeader>
       <CardContent className="grid grid-cols-2 grid-rows-2 gap-4 pb-10">
-        <ServerSummary value="2,342" label="Members" />
-        <ServerSummary value="Exist" label="Owner" />
-        <ServerSummary value="23" label="Roles" />
-        <ServerSummary value="Active" label="Premium" />
+        <ServerSummary value={props.members} label="Members" />
+        <ServerSummary value={props.owner} label="Owner" />
+        <ServerSummary value={props.roles} label="Roles" />
+        <ServerSummary
+          value={props.premium ? "Active" : "Inactive"}
+          label="Premium"
+        />
       </CardContent>
       <CardFooter className="flex items-center justify-between gap-4">
         <Button variant="default" className="w-full">

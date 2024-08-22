@@ -16,31 +16,23 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
 export type OpenedClosedChart = {
-  month: string;
-  desktop: number;
-  mobile: number;
+  day: string;
+  closed: number;
+  opened: number;
 };
 
 async function getData(): Promise<OpenedClosedChart[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve([
-        { month: "January", desktop: 186, mobile: 80 },
-        { month: "February", desktop: 305, mobile: 200 },
-        { month: "March", desktop: 237, mobile: 120 },
-        { month: "April", desktop: 73, mobile: 190 },
-        { month: "May", desktop: 209, mobile: 130 },
-        { month: "June", desktop: 214, mobile: 140 },
+        { day: "Sunday", closed: 186, opened: 80 },
+        { day: "Monday", closed: 305, opened: 200 },
+        { day: "Tuesday", closed: 100, opened: 237 },
+        { day: "Wednesday", closed: 73, opened: 190 },
+        { day: "Thursday", closed: 209, opened: 130 },
+        { day: "Friday", closed: 214, opened: 140 },
+        { day: "Saturday", closed: 214, opened: 140 },
       ]);
     }, 500);
   });
@@ -64,14 +56,14 @@ export async function OpenedClosedChart() {
       <CardHeader>
         <CardTitle>Tickets</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          Showing total visitors for the last 7 days
         </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             margin={{
               left: 12,
               right: 12,
@@ -79,7 +71,7 @@ export async function OpenedClosedChart() {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="day"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -113,7 +105,7 @@ export async function OpenedClosedChart() {
               </linearGradient>
             </defs>
             <Area
-              dataKey="mobile"
+              dataKey="closed"
               type="natural"
               fill="url(#fillMobile)"
               fillOpacity={0.4}
@@ -121,7 +113,7 @@ export async function OpenedClosedChart() {
               stackId="a"
             />
             <Area
-              dataKey="desktop"
+              dataKey="opened"
               type="natural"
               fill="url(#fillDesktop)"
               fillOpacity={0.4}
@@ -135,10 +127,10 @@ export async function OpenedClosedChart() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+              Trending up by 5.2% this day <TrendingUp className="h-4 w-4" />
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
+              Sunday - Saturday 2024
             </div>
           </div>
         </div>
