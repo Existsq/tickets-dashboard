@@ -1,80 +1,66 @@
-import ServerCard from "@/components/dashboard/servers/server-card";
+// app/Page.tsx (клиентский компонент)
+
+"use client"; // Директива, делающая компонент клиентским
+
+import React, { useState, useEffect } from "react";
+import Servers from "@/components/dashboard/servers/servers";
 import ServerCardSkeleton from "@/components/dashboard/servers/server-card-skeleton";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Search } from "lucide-react";
-import { Suspense } from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { IoGridOutline } from "react-icons/io5";
-import { IoIosList } from "react-icons/io";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { FiPlusCircle } from "react-icons/fi";
-import Link from "next/link";
 
-export default function Servers() {
-  return (
-    <>
-      <div className="grid grid-cols-3 gap-4 w-full px-6 lg:px-16 py-4 max-h-screen">
-        <div className="col-span-2">
-          <form className="w-full flex-1 sm:flex-initial">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search tickets..."
-                className="pl-8 w-full"
-              />
-            </div>
-          </form>
-        </div>
-        <div className=" col-span-1 flex gap-4 ">
-          <Select defaultValue="name">
-            <SelectTrigger className="w-[250px]">
-              <SelectValue placeholder="Sort by name" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="name">Sort by name</SelectItem>
-              <SelectItem value="new">Sort by newest</SelectItem>
-            </SelectContent>
-          </Select>
+// Функция для получения данных с задержкой
+async function fetchServersData() {
+  // Симуляция задержки
+  await new Promise((resolve) => setTimeout(resolve, 200)); // Задержка 2 секунды
 
-          <Tabs defaultValue="grid">
-            <TabsList>
-              <TabsTrigger value="grid" className="py-2 px-2.5">
-                <IoGridOutline size={15} color="#fff" />
-              </TabsTrigger>
-              <TabsTrigger value="list" className="py-2 px-2.5">
-                <IoIosList size={15} color="#fff" />
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+  // Возвращаем тестовые данные
+  return [
+    {
+      name: "Server 3",
+      members: "1",
+      premium: true,
+      roles: "23",
+      owner: "Exist",
+    },
+    {
+      name: "Server 1",
+      members: "1,234",
+      premium: true,
+      roles: "10",
+      owner: "Exist",
+    },
+    {
+      name: "Server 2",
+      members: "567",
+      premium: false,
+      roles: "5",
+      owner: "Exist",
+    },
+    {
+      name: "Server 5",
+      members: "789",
+      premium: true,
+      roles: "8",
+      owner: "Exist",
+    },
+  ];
+}
 
-          <Link
-            className={
-              buttonVariants({ variant: "default" }) +
-              "flex gap-2 items-center font-semibold"
-            }
-            href="https://discord.com/oauth2/authorize?client_id=1264239380000936067"
-          >
-            Add new
-            <FiPlusCircle size={17} />
-          </Link>
-        </div>
-      </div>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 w-full px-6 lg:px-16 max-h-screen">
-        <Suspense fallback={<ServerCardSkeleton />}>
-          <ServerCard members="2,345" premium={true} roles="23" owner="Exist" />
-        </Suspense>
-        <Suspense fallback={<ServerCardSkeleton />}>
-          <ServerCard members="23" premium={false} roles="12" owner="Exist" />
-        </Suspense>
-      </div>
-    </>
-  );
+export default function Page() {
+  const [servers, setServers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadServers = async () => {
+      const data = await fetchServersData();
+      setServers(data);
+      setLoading(false);
+    };
+
+    loadServers();
+  }, []);
+
+  if (loading) {
+    return <ServerCardSkeleton />;
+  }
+
+  return <Servers clientServers={servers} />;
 }

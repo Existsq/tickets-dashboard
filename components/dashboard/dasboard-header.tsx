@@ -73,7 +73,7 @@ function isSeparating(navLink: string) {
 export default async function DashboardHeader() {
   // Получаем сессию на сервере
   const session = await auth();
-  const currentServer = cookies().get("current-server")?.value;
+  const currentServer = cookies().get("current-server")?.value || "";
 
   // Определяем данные пользователя
   const userName = session?.user?.name || "User";

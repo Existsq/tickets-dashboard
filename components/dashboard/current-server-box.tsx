@@ -20,16 +20,20 @@ import {
 
 const frameworks = [
   {
-    value: "next.js",
-    label: "Test",
+    value: "Server 1",
+    label: "Server 1",
   },
   {
-    value: "sveltekit",
-    label: "Exist`s server",
+    value: "Server 2",
+    label: "Server 2",
   },
   {
-    value: "nuxt.js",
-    label: "Minehonor",
+    value: "Server 3",
+    label: "Server 3",
+  },
+  {
+    value: "Server 5",
+    label: "Server 5",
   },
 ];
 
@@ -80,7 +84,6 @@ export function CurrentServerBox(props: CurrentServerProps) {
                           )}`);
                     }
                     setValue(currentValue === value ? "" : currentValue);
-                    console.log(value);
                     setOpen(false);
                   }}
                 >

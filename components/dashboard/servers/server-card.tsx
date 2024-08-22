@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -6,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import React from "react";
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,14 +19,41 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import ServerSummary from "./server-summary";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "@/components/ui/dialog";
+
+function setServerCookie(server: string, onModalOpen: () => void) {
+  document.cookie = `current-server=${JSON.stringify(server)}`;
+  onModalOpen();
+}
+
 export type ServerCardProps = {
-  members: string;
-  owner: string;
-  roles: string;
-  premium: boolean;
+  members?: string;
+  owner?: string;
+  roles?: string;
+  premium?: boolean;
+  name?: string;
+  currentServer?: string;
 };
 
 export default function ServerCard(props: ServerCardProps) {
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const handleDialogOpen = () => setDialogOpen(true);
+  const handleDialogClose = () => setDialogOpen(false);
+
+  const handleContinue = () => {
+    handleDialogClose();
+    window.location.reload();
+  };
+
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between">
@@ -34,10 +62,8 @@ export default function ServerCard(props: ServerCardProps) {
             <AvatarImage alt="server avatar" />
             <AvatarFallback></AvatarFallback>
           </Avatar>
-          {/* <div className="flex-col items-center justify-start space-y-1"> */}
-          <CardTitle>Test</CardTitle>
-          {/* <CardDescription>Members: 2341</CardDescription> */}
-          {/* </div> */}
+
+          <CardTitle>{props.name}</CardTitle>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -60,16 +86,38 @@ export default function ServerCard(props: ServerCardProps) {
         <ServerSummary
           value={props.premium ? "Active" : "Inactive"}
           label="Premium"
+          className={props.premium ? "text-green-500" : "text-red-500"}
         />
       </CardContent>
       <CardFooter className="flex items-center justify-between gap-4">
         <Button variant="default" className="w-full">
           Manage settings
         </Button>
-        <Button variant="outline" className="w-full">
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={() => setServerCookie(props.name, handleDialogOpen)}
+        >
           Select as current
         </Button>
       </CardFooter>
+
+      <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Changing server dashboard</DialogTitle>
+            <DialogDescription>
+              Do you want to change server managing to <span>{props.name}</span>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex justify-center items-center">
+            <DialogClose asChild>
+              <Button variant="ghost">Cancel</Button>
+            </DialogClose>
+            <Button onClick={handleContinue}>Continue</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

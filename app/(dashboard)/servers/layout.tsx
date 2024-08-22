@@ -10,5 +10,5 @@ interface SettingsLayoutProps {
 }
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
-  return <>{children}</>;
+  return <div className="min-h-screen">{children}</div>;
 }
