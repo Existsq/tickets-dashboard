@@ -17,7 +17,6 @@ import MonthSkeleton from "@/components/admin/month-skeleton";
 import TableLoad from "@/components/admin/payments-table";
 import WeekSkeleton from "@/components/admin/week-skeleton";
 import WeekCard from "@/components/admin/week-card";
-import DropdownSkeleton from "@/components/dashboard/dropdown-skeleton";
 import PaymentCardInfo from "@/components/admin/payment-card";
 
 export default function SalesDashboard() {
@@ -28,12 +27,15 @@ export default function SalesDashboard() {
   }, []);
 
   return (
-    <div className="flex min-h-screen w-screen flex-col">
+    <div className="flex min-h-screen flex-col">
       <div className="flex flex-col sm:gap-4 sm:py-4">
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
           <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-              <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
+              <Card
+                className="col-span-1 sm:col-span-2"
+                x-chunk="dashboard-05-chunk-0"
+              >
                 <CardHeader className="pb-3">
                   <CardTitle>Your Orders</CardTitle>
                   <CardDescription className="max-w-lg text-balance leading-relaxed">
@@ -62,9 +64,7 @@ export default function SalesDashboard() {
                   <TabsTrigger value="year">Year</TabsTrigger>
                 </TabsList>
                 <div className="ml-auto flex items-center gap-2">
-                  <Suspense fallback={<DropdownSkeleton />}>
                     <DropdownMenu />
-                  </Suspense>
                   <Button
                     size="sm"
                     variant="outline"
@@ -83,7 +83,7 @@ export default function SalesDashboard() {
                       Recent orders from your store.
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="max-w-full">
                     <TableLoad key={reloadKey} />
                   </CardContent>
                 </Card>
@@ -97,7 +97,7 @@ export default function SalesDashboard() {
                       Recent orders from your store.
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="max-w-full">
                     <TableLoad key={reloadKey} />
                   </CardContent>
                 </Card>
@@ -111,7 +111,7 @@ export default function SalesDashboard() {
                       Recent orders from your store.
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="max-w-full">
                     <TableLoad key={reloadKey} />
                   </CardContent>
                 </Card>
