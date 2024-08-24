@@ -1,7 +1,17 @@
 import { NextResponse } from "next/server";
 import fetch from "node-fetch";
-import { generateRandomToken } from "@/lib/auth"; // Функция генерации токена
-import prisma from "@/utils/prisma"
+import jwt from "jsonwebtoken";
+import prisma from "@/utils/prisma";
+
+// Интерфейс для ответа от Discord
+interface DiscordTokenResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  refresh_token: string;
+  scope: string;
+  [key: string]: any; // Дополнительные поля
+}
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -20,16 +30,16 @@ export async function GET(request: Request) {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: new URLSearchParams({
-        client_id: "1264239380000936067",
-        client_secret: "Ywdd0tmvO3dUd5r1hEhPejlLHvWgvcol",
+        client_id: process.env.DISCORD_CLIENT_ID!,
+        client_secret: process.env.DISCORD_CLIENT_SECRET!,
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: "http://localhost:3000/api/auth/callback", // Убедитесь, что это правильный URI
+        redirect_uri: process.env.DISCORD_REDIRECT_URI!,
       }),
     });
 
-    // Преобразование ответа в JSON
-    const tokenData: any = await tokenResponse.json();
+    // Преобразование ответа в JSON с приведением типа
+    const tokenData = (await tokenResponse.json()) as DiscordTokenResponse;
 
     // Проверка, что tokenData содержит access_token
     if (!tokenData || typeof tokenData.access_token !== "string") {
@@ -90,12 +100,18 @@ export async function GET(request: Request) {
       });
     }
 
+    // Генерация JWT токена
+    const jwtToken = jwt.sign(
+      { userId: user.id, discordId: user.discordId },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1h" }
+    );
+
     // Создаём сессию
-    const sessionToken = generateRandomToken();
     await prisma.session.create({
       data: {
         userId: user.id,
-        sessionToken: sessionToken,
+        sessionToken: jwtToken,
         expires: new Date(Date.now() + 3600 * 1000), // 1 час
       },
     });
@@ -105,7 +121,7 @@ export async function GET(request: Request) {
       new URL("/servers", request.url).toString()
     );
 
-    response.cookies.set("session", sessionToken, {
+    response.cookies.set("session", jwtToken, {
       httpOnly: true,
       path: "/",
       maxAge: 3600, // 1 час

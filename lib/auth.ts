@@ -15,7 +15,6 @@ export async function verifySession(request: NextRequest) {
   try {
     const session = await prisma.session.findUnique({
       where: { sessionToken: sessionToken }, // Здесь используется строка, а не RequestCookie
-      cacheStrategy: { ttl: 60 },
     });
 
     if (!session || session.expires < new Date()) {
@@ -31,7 +30,6 @@ export async function verifySession(request: NextRequest) {
     // Сессия действительна, возвращаем информацию о пользователе
     const user = await prisma.user.findUnique({
       where: { id: session.userId },
-      cacheStrategy: { ttl: 60 },
     });
 
     return user; // Возвращаем пользователя, связанного с действительной сессией
