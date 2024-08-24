@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import DashboardHeader from "@/components/dashboard/header/dasboard-header";
+import DashboardHeader from "@/components/dashboard/dasboard-header";
 import { Metadata } from "next";
-import { ServerProvider } from "@/components/server-context";
+import { auth } from "@/auth";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -13,10 +13,12 @@ export default async function DashboardLayout({
 }: {
   children: ReactNode;
 }) {
+  const session = await auth();
+
   return (
-    <ServerProvider>
+    <>
       <DashboardHeader />
       <main className="w-screen min-h-full">{children}</main>
-    </ServerProvider>
+    </>
   );
 }

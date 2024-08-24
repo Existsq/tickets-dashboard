@@ -1,47 +1,52 @@
-// middleware.ts
-import { NextRequest, NextResponse } from "next/server";
-import { verifySession } from "@/lib/auth";
+import { NextResponse, NextRequest } from "next/server";
+import { getToken } from "@auth/core/jwt";
 
-// Публичные маршруты и API маршруты
-const PUBLIC_PATHS = ["/sign-in", "/api/auth/callback"];
-const PUBLIC_API_PATHS = ["/api/auth/callback"];
+const adminEmails = ["makswow7@gmail.com"];
 
-export async function middleware(request: NextRequest) {
-  const url = new URL(request.url);
+export async function middleware(req: NextRequest) {
+  // Получаем токен из запроса
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
 
-  // Публичные маршруты, которые не требуют аутентификации
-  if (
-    PUBLIC_PATHS.includes(url.pathname) ||
-    PUBLIC_API_PATHS.some((path) => url.pathname.startsWith(path))
-  ) {
-    // Проверка сессии для страницы входа
-    if (url.pathname === "/sign-in") {
-      const user = await verifySession(request);
+  const url = req.nextUrl.clone();
+  const protectedPaths = ["/dashboard", "/admin"];
+  const publicPaths = ["/sign-in"];
 
-      if (user) {
-        // Пользователь уже аутентифицирован, перенаправляем на главную страницу или другую страницу
-        return NextResponse.redirect(new URL("/", request.url));
-      }
+  // Если запрос идет на защищенный путь
+  if (protectedPaths.some((path) => url.pathname.startsWith(path))) {
+    // Если токен отсутствует, перенаправляем на страницу логина
+    if (!token) {
+      url.pathname = "/sign-in";
+      return NextResponse.redirect(url);
     }
-    return NextResponse.next();
+
+    // Если пользователь авторизован и пытается перейти на логин или главную панель
+    if (url.pathname === "/sign-in" || url.pathname === "/dashboard") {
+      if (adminEmails.includes(token.email)) {
+        url.pathname = "/sales";
+      } else {
+        url.pathname = "/analytics";
+      }
+      return NextResponse.redirect(url);
+    }
   }
 
-  // Проверка сессии для защищенных маршрутов
-  const user = await verifySession(request);
-
-  if (!user) {
-    // Перенаправление на страницу логина, если сессия не найдена
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+  // Если запрос идет на публичный путь и пользователь авторизован
+  if (publicPaths.some((path) => url.pathname.startsWith(path))) {
+    if (token) {
+      if (adminEmails.includes(token.email)) {
+        url.pathname = "/sales";
+      } else {
+        url.pathname = "/analytics";
+      }
+      return NextResponse.redirect(url);
+    }
   }
 
-  // Если сессия действительна, продолжайте обработку запроса
+  // Для всех остальных случаев продолжаем запрос
   return NextResponse.next();
 }
 
-// Определение конфигурации для matcher
+// Конфигурация для применения middleware только к определенным путям
 export const config = {
-  matcher: [
-    "/((?!api/auth/callback|_next/static|_next/image|favicon.ico).*)",
-    "/api/:path*",
-  ],
+  matcher: ["/profile/:path*", "/sign-in"],
 };

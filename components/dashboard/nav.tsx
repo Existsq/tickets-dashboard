@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { Separator } from "../../ui/separator";
+import { Separator } from "../ui/separator";
 import Link from "next/link";
 
 type Navlink = {
@@ -29,7 +29,7 @@ const Navigation = ({ navlinks, isAdmin, orientation }: Props) => {
                 <Separator
                   orientation={orientation}
                   className={
-                    orientation === "horizontal" ? "max-w-20" : "h-6"
+                    orientation === "horizontal" ? "max-w-20" : "min-h-8"
                   }
                 />
               )}
