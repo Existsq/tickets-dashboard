@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import jwt from "jsonwebtoken";
 import prisma from "@/utils/prisma";
 
-// Интерфейс для ответа от Discord
+// Интерфейс для ответа от Discords
 interface DiscordTokenResponse {
   access_token: string;
   token_type: string;
