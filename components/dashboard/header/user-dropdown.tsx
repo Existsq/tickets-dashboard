@@ -1,7 +1,6 @@
 import React from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
-import { SignOut } from '@/components/auth/sign-out';
 import UserAvatar from './user-avatar';
 
 export default function UserDropdown({ session }: { session: any }) {
@@ -31,7 +30,7 @@ export default function UserDropdown({ session }: { session: any }) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <SignOut />
+          <p>Sign out</p>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

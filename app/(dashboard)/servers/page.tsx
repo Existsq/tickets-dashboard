@@ -79,12 +79,14 @@ export default function Page() {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const moveServerToTop = (serverName: string, serverList: ServerData[]) => {
-    const serverIndex = serverList.findIndex((server) => server.name === serverName);
+    const serverIndex = serverList.findIndex(
+      (server) => server.name === serverName
+    );
     if (serverIndex !== -1) {
       const [selectedServer] = serverList.splice(serverIndex, 1);
       serverList.unshift(selectedServer);
     }
-    return [...serverList];  // Возвращаем новый массив
+    return [...serverList]; // Возвращаем новый массив
   };
 
   const loadServers = useCallback(async () => {
@@ -142,10 +144,9 @@ export default function Page() {
     }
   };
 
-  const filteredServers = servers
-    .filter((server) =>
-      server.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  const filteredServers = servers.filter((server) =>
+    server.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const containerClass =
     viewMode === "grid"

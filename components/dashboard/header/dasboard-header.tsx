@@ -2,7 +2,6 @@ import React from "react";
 import { Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { auth } from "@/auth";
 import { Navigation } from "./user-navigation";
 import { CurrentServerBox, Server } from "./current-server-box";
 import UserDropdown from "./user-dropdown";
@@ -41,9 +40,9 @@ function isAdmin(email: string): boolean {
 }
 
 export default async function DashboardHeader() {
-  const session = await auth();
-  const userEmail = session?.user?.email || "user@example.com";
-  const isAdm = isAdmin(userEmail);
+  // const session = await auth();
+  // const userEmail = session?.user?.email || "user@example.com";
+  const isAdm = isAdmin("makswow7@gmail.com");
 
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-[100]">
@@ -90,7 +89,7 @@ export default async function DashboardHeader() {
           </div>
         </div>
 
-        <UserDropdown session={session} />
+        <UserDropdown session={{username: "asd", userEmail: "asd", userImage: "a"}} />
       </div>
     </header>
   );

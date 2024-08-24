@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  discordId   String    @unique
+  username    String
+  email       String    @unique
+  accessToken String
+  refreshToken String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Добавляем поле для связи с моделью Session
+  sessions    Session[] 
+}
+
+model Session {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  sessionToken String  @unique
+  expires     DateTime
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}

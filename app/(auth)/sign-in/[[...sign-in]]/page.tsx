@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/card";
 import { GoArrowRight } from "react-icons/go";
 import { ModeToggle } from "@/components/ui/mode-toggle";
-import SignIn from "@/components/auth/sign-in";
 import Link from "next/link";
+import LoginButton from "@/components/auth/login-button";
 
 export default async function LoginForm() {
   return (
@@ -25,7 +25,7 @@ export default async function LoginForm() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-row space-y-3">
-            <SignIn />
+            <LoginButton />
             <Button
               variant="outline"
               className="w-full flex justify-center items-center gap-2"

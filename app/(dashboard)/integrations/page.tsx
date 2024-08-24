@@ -1,3 +1,5 @@
-export default function Integrations() {
+import React from "react";
+
+export default function UsersDashboard() {
   return <></>;
 }
