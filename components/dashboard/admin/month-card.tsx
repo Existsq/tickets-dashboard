@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Progress } from "../ui/progress";
+import { Progress } from "../../ui/progress";
 
 export type Metrics = {
   monthSummary: string;

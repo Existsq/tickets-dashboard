@@ -27,7 +27,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import Cookies from "js-cookie";
-import { useServer } from "@/components/server-context";
+import { useServer } from "@/components/general/server-context";
 
 export type Server = {
   value: string;

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import DashboardHeader from "@/components/dashboard/header/dasboard-header";
 import { Metadata } from "next";
-import { ServerProvider } from "@/components/server-context";
+import { ServerProvider } from "@/components/general/server-context";
 
 export const metadata: Metadata = {
   title: "Dashboard",

@@ -13,6 +13,9 @@ import { ModeToggle } from "@/components/ui/mode-toggle";
 import Link from "next/link";
 import LoginButton from "@/components/auth/login-button";
 
+// TODO: Split to components
+
+
 export default async function LoginForm() {
   return (
     <div className="flex justify-center items-center min-h-screen">

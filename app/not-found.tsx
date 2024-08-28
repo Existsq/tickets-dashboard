@@ -1,4 +1,4 @@
-import LinkCard from "@/components/404/link-card";
+import LinkCard from "@/components/not-found/link-card";
 import { ArrowLeft } from "lucide-react";
 import {
   HiOutlineCommandLine,

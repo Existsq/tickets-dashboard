@@ -12,12 +12,15 @@ import {
 } from "@/components/ui/card";
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MonthCard from "@/components/admin/month-card";
-import MonthSkeleton from "@/components/admin/month-skeleton";
-import TableLoad from "@/components/admin/payments-table";
-import WeekSkeleton from "@/components/admin/week-skeleton";
-import WeekCard from "@/components/admin/week-card";
-import PaymentCardInfo from "@/components/admin/payment-card";
+import MonthCard from "@/components/dashboard/admin/month-card";
+import MonthSkeleton from "@/components/dashboard/admin/month-skeleton";
+import TableLoad from "@/components/dashboard/admin/payments-table";
+import WeekSkeleton from "@/components/dashboard/admin/week-skeleton";
+import WeekCard from "@/components/dashboard/admin/week-card";
+import PaymentCardInfo from "@/components/dashboard/admin/payment-card";
+
+
+// TODO: Split to components
 
 export default function SalesDashboard() {
   const [reloadKey, setReloadKey] = useState<number>(0);

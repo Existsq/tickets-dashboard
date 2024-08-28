@@ -11,7 +11,7 @@ import {
   DialogDescription,
   DialogClose,
 } from "@/components/ui/dialog";
-import { useServer } from "@/components/server-context";
+import { useServer } from "@/components/general/server-context";
 
 interface ModalOpenerButtonProps {
   name: string;

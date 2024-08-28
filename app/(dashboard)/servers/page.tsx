@@ -1,27 +1,23 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ServerCard,
-  ServerCardSkeleton,
-} from "@/components/dashboard/servers/server-card";
-import Cookies from "js-cookie";
+import SearchBar from "@/components/dashboard/servers/search-bar";
+import ServerList from "@/components/dashboard/servers/server-list";
 import {
   Select,
+  SelectTrigger,
   SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { buttonVariants } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoIosList } from "react-icons/io";
 import { IoGridOutline } from "react-icons/io5";
-import { Input } from "@/components/ui/input";
-import Link from "next/link";
+import Cookies from "js-cookie";
+import { ServerCardSkeleton } from "@/components/dashboard/servers/server-card";
 
 interface ServerData {
   name: string;
@@ -86,7 +82,7 @@ export default function Page() {
       const [selectedServer] = serverList.splice(serverIndex, 1);
       serverList.unshift(selectedServer);
     }
-    return [...serverList]; // Возвращаем новый массив
+    return [...serverList];
   };
 
   const loadServers = useCallback(async () => {
@@ -131,10 +127,20 @@ export default function Page() {
     loadServers();
   }, [loadServers]);
 
-  const handleServerChange = (newServer: string) => {
-    Cookies.set("current-server", newServer);
-    setServers((prevServers) => moveServerToTop(newServer, prevServers));
-  };
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const currentServer = Cookies.get("current-server");
+      if (currentServer) {
+        setServers((prevServers) => moveServerToTop(currentServer, prevServers));
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   const handleSortChange = (value: string) => {
     if (value === sortBy) {
@@ -151,24 +157,18 @@ export default function Page() {
   const containerClass =
     viewMode === "grid"
       ? "grid grid-cols-3 gap-4 gap-y-10 w-full px-6 lg:px-16 pt-4 pb-20"
-      : "flex flex-col gap-4 gap-4 gap-y-10 w-full px-6 lg:px-16 pt-4 pb-20";
+      : "flex flex-col gap-4 w-full px-6 lg:px-16 pt-4 pb-20";
 
   if (loading) {
     return (
       <>
         <div className="grid grid-cols-3 gap-4 w-full px-6 lg:px-16 py-4">
           <div className="col-span-2">
-            <form className="w-full flex-1 sm:flex-initial">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  disabled
-                  type="search"
-                  placeholder="Search servers..."
-                  className="pl-8 w-full border-border border-[1px]"
-                />
-              </div>
-            </form>
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              disabled={true}
+            />
           </div>
           <div className="col-span-1 flex gap-4">
             <Select>
@@ -191,7 +191,7 @@ export default function Page() {
             <Link
               className={
                 buttonVariants({ variant: "default" }) +
-                "flex gap-2 items-center font-semibold"
+                " flex gap-2 items-center font-semibold"
               }
               href="https://discord.com/oauth2/authorize?client_id=1264239380000936067"
             >
@@ -222,17 +222,10 @@ export default function Page() {
     <>
       <div className="grid grid-cols-3 gap-4 w-full px-6 lg:px-16 py-4 max-h-screen">
         <div className="col-span-2">
-          <div className="w-full flex-1 sm:flex-initial">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search servers..."
-                className="pl-8 w-full"
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </div>
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
         </div>
 
         <div className="col-span-1 flex gap-4 items-center">
@@ -267,7 +260,7 @@ export default function Page() {
           <Link
             className={
               buttonVariants({ variant: "default" }) +
-              "flex gap-2 items-center font-semibold"
+              " flex gap-2 items-center font-semibold"
             }
             href="https://discord.com/oauth2/authorize?client_id=1264239380000936067"
           >
@@ -277,36 +270,7 @@ export default function Page() {
         </div>
       </div>
 
-      <AnimatePresence>
-        <motion.div
-          className={containerClass}
-          key={viewMode}
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -5 }}
-          transition={{ duration: 0.2 }}
-        >
-          {filteredServers.map((server) => (
-            <AnimatePresence key={server.name}>
-              <motion.div
-                key={server.name}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4 }}
-              >
-                <ServerCard
-                  name={server.name}
-                  members={server.members}
-                  premium={server.premium}
-                  roles={server.roles}
-                  owner={server.owner}
-                />
-              </motion.div>
-            </AnimatePresence>
-          ))}
-        </motion.div>
-      </AnimatePresence>
+      <ServerList servers={filteredServers} viewMode={viewMode} />
     </>
   );
 }
