@@ -9,8 +9,7 @@ const nextConfig = {
         hostname: "cdn.discordapp.com",
       },
     ],
-  },
-  output: 'export',
+  }
 };
 
 module.exports = nextConfig;
