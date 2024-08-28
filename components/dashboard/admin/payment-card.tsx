@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "../../ui/card";
 import {
   ChevronLeft,
   ChevronRight,
@@ -15,20 +15,20 @@ import {
   MoreVertical,
   Truck,
 } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Separator } from "../ui/separator";
+} from "../../ui/dropdown-menu";
+import { Separator } from "../../ui/separator";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
-} from "../ui/pagination";
+} from "../../ui/pagination";
 
 export default function PaymentCardInfo() {
   return (
