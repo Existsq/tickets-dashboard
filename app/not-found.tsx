@@ -1,5 +1,4 @@
 import LinkCard from "@/components/404/link-card";
-import { BookOpen } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import {
   HiOutlineCommandLine,

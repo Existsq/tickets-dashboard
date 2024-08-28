@@ -1,10 +1,5 @@
-import React from 'react'
+import React from "react";
 
-
-// 
-
-export default function Suuport() {
-  return (
-    <div>page</div>
-  )
+export default function Support() {
+  return <div>page</div>;
 }

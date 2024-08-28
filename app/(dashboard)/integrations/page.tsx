@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function UsersDashboard() {
+export default function IntegrationsDashboard() {
   return <></>;
 }

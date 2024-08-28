@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter as FontSans, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "@/styles/globals.css";
 import { Toaster } from "@/components/ui/toaster";
