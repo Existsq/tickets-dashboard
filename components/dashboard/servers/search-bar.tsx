@@ -3,8 +3,8 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 interface SearchBarProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
+  searchQuery?: string;
+  setSearchQuery?: (query: string) => void;
   disabled?: boolean;
 }
 
@@ -16,7 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, setSearchQuery, disa
       placeholder="Search servers..."
       className="pl-8 w-full"
       value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
+      // onChange={(e) => setSearchQuery(e.target.value)}
       disabled={disabled}
     />
   </div>

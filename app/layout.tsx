@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={GeistSans.className}>
+    <html lang="en" className={GeistSans.className}>
       <head />
       <body className={"min-h-screen bg-background font-sans antialiased"}>
         <ThemeProvider
